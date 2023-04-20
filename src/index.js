@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-
 import App from './App';
+
+import createSagaMiddleware from 'redux-saga';
+import logger from 'redux-logger';
+
+import axios from 'axios'; 
+import { takeEvery, put } from 'redux-saga/effects';
 
 // this startingPlantArray should eventually be removed
 const startingPlantArray = [
@@ -21,9 +26,24 @@ const plantList = (state = startingPlantArray, action) => {
   }
 };
 
+
+
+
+
+function* rootSaga() {
+
+}
+
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
-  combineReducers({ plantList }),
+  combineReducers({ 
+    plantList 
+  }),
+  applyMiddleware(sagaMiddleware, logger),
 );
+
+sagaMiddleware.run(rootSaga); 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
