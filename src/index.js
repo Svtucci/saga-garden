@@ -34,7 +34,9 @@ function* fetchPlants() {
     console.log(`error in fetchplants: ${error}`);
     alert('Someting went wrong'); 
   }
-}
+};
+
+
 
 
 
