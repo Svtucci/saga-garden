@@ -26,12 +26,21 @@ const plantList = (state = startingPlantArray, action) => {
   }
 };
 
+function* fetchPlants() {
+  try {
+    const plants = yield axios.get('/api/plant');
+    yield put({type: 'SET_PLANTS', payload: plants.data})
+  } catch (error) {
+    console.log(`error in fetchplants: ${error}`);
+    alert('Someting went wrong'); 
+  }
+}
 
 
 
 
 function* rootSaga() {
-
+  yield takeEvery('FETCH_PLANTS', fetchPlants); 
 }
 
 const sagaMiddleware = createSagaMiddleware();
